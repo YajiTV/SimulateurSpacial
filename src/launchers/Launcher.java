@@ -1,19 +1,78 @@
 package launchers;
 
 public abstract class Launcher {
+
+    // private = only accessible inside this class
     private String name;
     private double maxFuel;
-    private double maximumUsefulLoad;
-    private int boosterMax;
-    private boolean resident;
-    private boolean price;
+    private double maxPayload;
+    private int maxBoosters;
+    private boolean crewed;
+    private double price;
 
-    public Launcher(String name, double maxFuel, double maximumUsefulLoad, int boosterMax, boolean resident, boolean price) {
+    // Constructor: called when a subclass creates a new Launcher ---
+    public Launcher(String name, double maxFuel, double maxPayload, int maxBoosters, boolean crewed, double price) {
+
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Name can not be null or empty");
+        }
+        if (maxFuel <= 0) {
+            throw new IllegalArgumentException("Max fuel must be greater than 0");
+        }
+        if (maxPayload <= 0) {  
+            throw new IllegalArgumentException("Max payload must be greater than 0");
+        }
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
+
+        // Assignment: we store each value in its attribute
         this.name = name;
         this.maxFuel = maxFuel;
-        this.maximumUsefulLoad = maximumUsefulLoad;
-        this.boosterMax = boosterMax;
-        this.resident = resident;
+        this.maxPayload = maxPayload;
+        this.maxBoosters = maxBoosters;
+        this.crewed = crewed;
         this.price = price;
+    }
+
+    // Abstract method: each subclass MUST provide its own version
+    public abstract double calculateMaxThrust();
+
+    // Getters: the only way to read private attributes from outside
+    public String getName() {
+        return name;
+    }
+
+    public double getMaxFuel() {
+        return maxFuel;
+    }
+
+    public double getMaxPayload() {
+        return maxPayload;
+    }
+
+    public int getMaxBoosters() {
+        return maxBoosters;
+    }
+
+    public boolean isCrewed() {
+        return crewed;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    // toString: readable summary when we print a Launcher
+    @Override
+    public String toString() {
+        return "Launcher{"
+                + "name='" + name + "'"
+                + ", maxFuel=" + maxFuel + "t"
+                + ", maxPayload=" + maxPayload + "t"
+                + ", maxBoosters=" + maxBoosters
+                + ", crewed=" + crewed
+                + ", price=" + price + "M$"
+                + "}";
     }
 }

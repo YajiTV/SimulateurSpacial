@@ -1,5 +1,5 @@
 package services;
 
-public class simulator {
+public class Simulator {
     
 }
