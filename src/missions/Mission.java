@@ -1,51 +1,60 @@
 package missions;
+
 import exceptions.FuelInsufficient;
 import models.Rocket;
 
 public abstract class Mission {
+
     private String name;
     private double distance;
     private double fuelCoefficient;
-    private boolean crewedRequired;
-    
-    public Mission(String name, double distance, double fuelCoefficient, boolean crewedRequired) {
+    private boolean crewRequired;
+
+    public Mission(String name, double distance, double fuelCoefficient,
+                   boolean crewRequired) {
+
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Name can not be null or empty");
+            throw new IllegalArgumentException("Name cannot be null or empty");
         }
-        if (distance <= 0) {
-            throw new IllegalArgumentException("Distance must be greater than 0");
+        if (distance < 0) {
+            throw new IllegalArgumentException("Distance cannot be negative");
         }
-        if (fuelCoefficient <= 0) {
-            throw new IllegalArgumentException("Fuel coefficient must be greater than 0");
+        if (fuelCoefficient < 0) {
+            throw new IllegalArgumentException("Fuel coefficient cannot be negative");
         }
 
         this.name = name;
         this.distance = distance;
         this.fuelCoefficient = fuelCoefficient;
-        this.crewedRequired = crewedRequired;
+        this.crewRequired = crewRequired;
     }
-    public abstract double calculateFuelNeeded(Rocket rocket) throws FuelInsufficient;
+
+    public abstract double calculateRequiredFuel(Rocket rocket)
+            throws FuelInsufficient;
 
     public String getName() {
         return name;
     }
+
     public double getDistance() {
         return distance;
     }
+
     public double getFuelCoefficient() {
         return fuelCoefficient;
     }
-    public boolean isCrewedRequired() {
-        return crewedRequired;
+
+    public boolean isCrewRequired() {
+        return crewRequired;
     }
 
     @Override
     public String toString() {
         return "Mission{"
                 + "name='" + name + "'"
-                + ", distance=" + distance + "Mille kms"
+                + ", distance=" + distance + "km"
                 + ", fuelCoefficient=" + fuelCoefficient
-                + ", crewedRequired=" + crewedRequired
-                + '}';
+                + ", crewRequired=" + crewRequired
+                + "}";
     }
 }
