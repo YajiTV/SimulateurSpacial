@@ -35,9 +35,6 @@ public abstract class Launcher {
         this.price = price;
     }
 
-    // Abstract method: each subclass MUST provide its own version
-    public abstract double calculateMaxThrust();
-
     // Getters: the only way to read private attributes from outside
     public String getName() {
         return name;

@@ -12,10 +12,10 @@ public abstract class Capsule {
             throw new IllegalArgumentException("Name can not be null or empty");
         }
         if (maxOccupants < 0) {
-            throw new IllegalArgumentException("Max occupants cannot be negative");
+            throw new IllegalArgumentException("Max occupants can not be negative");
         }
         if (price < 0) {
-            throw new IllegalArgumentException("Price cannot be negative");
+            throw new IllegalArgumentException("Price can not be negative");
         }
         if (weight <= 0) {
             throw new IllegalArgumentException("Weight must be greater than 0");
