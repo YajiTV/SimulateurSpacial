@@ -48,7 +48,6 @@ public abstract class Mission {
         return crewRequired;
     }
 
-    @Override
     public String toString() {
         return "Mission{"
                 + "name='" + name + "'"
