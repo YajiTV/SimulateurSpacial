@@ -1,5 +1,4 @@
 package booster;
-import models.Booster;
 
 public class BE3 extends Booster {
     public BE3() {

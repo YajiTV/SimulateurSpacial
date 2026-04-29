@@ -1,5 +1,4 @@
 package booster;
-import models.Booster;
 
 public class EAP extends Booster {
     public EAP() {

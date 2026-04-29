@@ -3,6 +3,9 @@ package models;
 import capsules.Capsule;
 import launchers.Launcher;
 import java.util.List;
+
+import booster.Booster;
+
 import java.util.ArrayList;
 
 

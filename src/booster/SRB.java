@@ -1,5 +1,4 @@
 package booster;
-import models.Booster;
 
 public class SRB extends Booster {
     public SRB() {

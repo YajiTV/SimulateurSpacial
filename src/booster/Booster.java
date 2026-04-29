@@ -1,4 +1,4 @@
-package models;
+package booster;
 
 public class Booster {
     private String name;
