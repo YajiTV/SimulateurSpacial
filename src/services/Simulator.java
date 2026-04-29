@@ -45,10 +45,18 @@ public class Simulator {
         return new Launch(rocket, mission, true, "Success", cost);
     }
     public double calculateTotalCost(Rocket rocket, double requiredFuel) {
-            if (requiredFuel <= 0) {
-                throw new IllegalArgumentException("Fuel must be > 0");
-            } else {
-                return rocket.getTotalPrice() + (requiredFuel * KEROSENE_PRICE_PER_TON);
-            }
+        if (requiredFuel <= 0) {
+            throw new IllegalArgumentException("Fuel must be > 0");
+        } else {
+            return rocket.getTotalPrice() + (requiredFuel * KEROSENE_PRICE_PER_TON);
         }
+        }
+    public void checkCompatibility(Rocket rocket, Mission mission) {
+        if (rocket == null || mission == null) {
+            throw new IllegalArgumentException("Rocket and Mission cannot be null");
+        }
+        if (mission.isCrewRequired() && (!rocket.getCapsule().isCrewed())) {
+            throw new IllegalArgumentException("Capsule incompatible ");
+        }
+    }
 }
