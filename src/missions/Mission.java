@@ -29,8 +29,16 @@ public abstract class Mission {
         this.crewRequired = crewRequired;
     }
 
-    public abstract double calculateRequiredFuel(Rocket rocket)
-            throws FuelInsufficient;
+    public double calculateRequiredFuel(Rocket rocket) throws FuelInsufficient {
+    if (rocket == null) {
+        throw new IllegalArgumentException("Rocket cannot be null");
+    }
+    double fuel = (rocket.getTotalMass() * getDistance() * getFuelCoefficient()) / 1000;
+    if (fuel > rocket.getLauncher().getMaxFuel()) {
+        throw new FuelInsufficient(fuel, rocket.getLauncher().getMaxFuel());
+    }
+    return fuel;
+    }
 
     public String getName() {
         return name;
