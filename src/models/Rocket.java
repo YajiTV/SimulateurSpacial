@@ -2,10 +2,29 @@ package models;
 
 import capsules.Capsule;
 import launchers.Launcher;
+import java.util.List;
+import java.util.ArrayList;
+
 
 public class Rocket {
     private Launcher launcher;
     private Capsule capsule;
+    private List<Booster> boosters;
+
+    public void addBooster(Booster booster) {
+        if (booster == null) {
+            throw new IllegalArgumentException("Booster cannot be null");
+        }
+        if (boosters.size() >= launcher.getMaxBoosters()) {
+            throw new IllegalArgumentException("Max boosters reached for this launcher");
+        }
+        boosters.add(booster);
+    }
+    public void addBooster(Booster booster, int quantity) {
+        for (int i = 0; i < quantity; i++) {
+            addBooster(booster);
+        }
+    }
 
     public Rocket(Launcher launcher, Capsule capsule) {
         if (launcher == null) {
@@ -16,6 +35,11 @@ public class Rocket {
         }
         this.launcher = launcher;
         this.capsule = capsule;
+        this.boosters = new ArrayList<>();
+    }
+
+    public List<Booster> getBoosters() {
+        return boosters;
     }
 
     public Launcher getLauncher() {
@@ -27,7 +51,19 @@ public class Rocket {
     }
 
     public double getTotalMass() {
-        return launcher.getMaxPayload() + capsule.getWeight();
+        double totalMass = launcher.getMaxPayload() + capsule.getWeight();
+        for (Booster booster : boosters) {
+            totalMass += booster.getMass();
+        }
+        return totalMass;
+    }
+
+    public double getTotalPrice() {
+        double total = launcher.getPrice() + capsule.getPrice();
+        for (Booster booster : boosters) {
+            total += booster.getPrice();
+            }
+        return total;
     }
 
     public String toString() {
