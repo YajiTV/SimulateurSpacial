@@ -39,5 +39,22 @@ public class Launch {
         success ? "SUCCESS" : "FAILURE (" + reason + ")",
         totalCost);
     }
-
+    public Rocket getRocket() {
+        return rocket;
+    }
+    public Mission getMission() {
+        return mission;
+    }
+    public LocalDateTime getDate() {
+        return date;
+    }
+    public boolean isSuccess() {
+        return success;
+    }
+    public String getReason() {
+        return reason;
+    }
+    public double getTotalCost() {
+        return totalCost;
+    }
 }
