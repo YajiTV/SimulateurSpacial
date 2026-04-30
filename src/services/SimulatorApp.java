@@ -4,12 +4,29 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+
+import capsules.Apollo;
 import capsules.Capsule;
+import capsules.CargoDragon;
+import capsules.CrewDragon;
+import capsules.Orion;
+import launchers.Ariane5;
+import launchers.Falcon9;
 import launchers.Launcher;
+import launchers.SLS;
+import launchers.SaturneV;
+import booster.BE3;
 import booster.Booster;
+import booster.EAP;
+import booster.SRB;
 import models.Launch;
 import models.Rocket;
+import missions.ISS;
+import missions.Lune;
+import missions.Mars;
 import missions.Mission;
+import missions.MissionPointLagrangeL2;
+import missions.OrbitTerrestre;
 
 public class SimulatorApp {
     private static SimulatorApp instance;
@@ -21,14 +38,16 @@ public class SimulatorApp {
     private List<Launch> history;
     private Rocket currentRocket;
     private Mission currentMission;
+    private Launcher selectedLauncher;
+    private Capsule selectedCapsule;
 
     private SimulatorApp() {
-        launchers = new ArrayList<>();
-        capsules  = new ArrayList<>();
-        boosters  = new ArrayList<>();
-        missions  = new ArrayList<>();
-        history   = new ArrayList<>();
-        // launchers.add(new SLS()); etc.
+        launchers = new ArrayList<>(List.of(new SLS(), new SaturneV(), new Ariane5(), new Falcon9()));
+        capsules  = new ArrayList<>(List.of(new Orion(), new CrewDragon(), new CargoDragon(), new Apollo()));
+        boosters  = new ArrayList<>(List.of(new SRB(), new EAP(), new BE3()));
+        missions  = new ArrayList<>(List.of(new ISS(), new Lune(), new Mars(), new MissionPointLagrangeL2(), new OrbitTerrestre()));
+        history   = new ArrayList<>(List.of());
+
     }
 
     public static SimulatorApp getInstance() {
@@ -51,12 +70,13 @@ public class SimulatorApp {
 
             try {
                 choice = scanner.nextInt();
+                scanner.nextLine();
             } catch (InputMismatchException e) {
                 scanner.nextLine();
                 continue;
             }
 
-            switch (choice) {       // ← DANS le while
+            switch (choice) {
                 case 1:
                     chooseLauncher(scanner);
                     break;
@@ -70,7 +90,7 @@ public class SimulatorApp {
                     launch();
                     break;
                 case 5:
-                    System.out.println("Goodbye!");
+                    System.out.println("Bye !");
                     break;
                 default:
                     System.out.println("Invalid choice.");
@@ -88,5 +108,68 @@ public class SimulatorApp {
         Launch result = simulator.simulate(currentRocket, currentMission);
         history.add(result);
         System.out.println(result);
+    }
+    private void chooseLauncher(Scanner scanner) {
+        for (int i = 0; i < launchers.size(); i++) {
+            System.out.println((i + 1) + ". " + launchers.get(i).getName());
+        }
+        try {
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            if (choice < 1 || choice > launchers.size()) {
+                System.out.println("Invalid choice.");
+                return;
+            }
+            selectedLauncher = launchers.get(choice - 1);
+            if (selectedCapsule != null) {
+                currentRocket = new Rocket(selectedLauncher, selectedCapsule);
+            }
+            System.out.println("Launcher selected: " + selectedLauncher.getName());
+        } catch (InputMismatchException e) {
+            scanner.nextLine();
+            System.out.println("Invalid input.");
+        }
+    }
+    private void chooseCapsule(Scanner scanner) {
+        for (int i = 0; i < capsules.size(); i++) {
+            System.out.println((i + 1) + ". " + capsules.get(i).getName());
+        }
+        try {
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            if (choice < 1 || choice > capsules.size()) {
+                System.out.println("Invalid choice.");
+                return;
+            }
+            selectedCapsule = capsules.get(choice - 1);
+            if (selectedLauncher != null) {
+                currentRocket = new Rocket(selectedLauncher, selectedCapsule);
+            }
+            System.out.println("Capsule selected: " + selectedCapsule.getName());
+        } catch (InputMismatchException e) {
+            scanner.nextLine();
+            System.out.println("Invalid input.");
+        }
+    }
+    private void chooseMission(Scanner scanner) {
+        for (int i = 0; i < missions.size(); i++) {
+            System.out.println((i + 1) + ". " + missions.get(i).getName());
+        }
+        try {            int choice = scanner.nextInt();
+            scanner.nextLine();
+            if (choice < 1 || choice > missions.size()) {
+                System.out.println("Invalid choice.");
+                return;
+            }
+            currentMission = missions.get(choice - 1);
+            if (currentMission != null) {
+                currentMission = new Mission(currentMission.getName(), currentMission.getDistance(),
+                        currentMission.getFuelCoefficient(), currentMission.isCrewRequired()) {
+                };
+            }
+        } catch (InputMismatchException e) {
+            scanner.nextLine();
+            System.out.println("Invalid input.");
+        }
     }
 }
