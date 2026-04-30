@@ -110,12 +110,14 @@ public class SimulatorApp {
         System.out.println(result);
     }
     private void chooseLauncher(Scanner scanner) {
+        System.out.println("0. Back");
         for (int i = 0; i < launchers.size(); i++) {
             System.out.println((i + 1) + ". " + launchers.get(i).getName());
         }
         try {
             int choice = scanner.nextInt();
             scanner.nextLine();
+            if (choice == 0) return;
             if (choice < 1 || choice > launchers.size()) {
                 System.out.println("Invalid choice.");
                 return;
@@ -131,12 +133,14 @@ public class SimulatorApp {
         }
     }
     private void chooseCapsule(Scanner scanner) {
+        System.out.println("0. Back");
         for (int i = 0; i < capsules.size(); i++) {
             System.out.println((i + 1) + ". " + capsules.get(i).getName());
         }
         try {
             int choice = scanner.nextInt();
             scanner.nextLine();
+            if (choice == 0) return;
             if (choice < 1 || choice > capsules.size()) {
                 System.out.println("Invalid choice.");
                 return;
@@ -152,21 +156,20 @@ public class SimulatorApp {
         }
     }
     private void chooseMission(Scanner scanner) {
+        System.out.println("0. Back");
         for (int i = 0; i < missions.size(); i++) {
             System.out.println((i + 1) + ". " + missions.get(i).getName());
         }
-        try {            int choice = scanner.nextInt();
+        try {
+            int choice = scanner.nextInt();
             scanner.nextLine();
+            if (choice == 0) return;
             if (choice < 1 || choice > missions.size()) {
                 System.out.println("Invalid choice.");
                 return;
             }
             currentMission = missions.get(choice - 1);
-            if (currentMission != null) {
-                currentMission = new Mission(currentMission.getName(), currentMission.getDistance(),
-                        currentMission.getFuelCoefficient(), currentMission.isCrewRequired()) {
-                };
-            }
+            System.out.println("Mission selected: " + currentMission.getName());
         } catch (InputMismatchException e) {
             scanner.nextLine();
             System.out.println("Invalid input.");

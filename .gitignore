@@ -15,6 +15,7 @@ CLAUDE.md
 *.zip
 *.tar.gz
 *.rar
+out/
 
 # ===========================
 # Build directories
