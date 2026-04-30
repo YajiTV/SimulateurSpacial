@@ -66,12 +66,13 @@ public class SimulatorApp {
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
 
-        while (choice != 5) {
+        while (choice != 6) {
             System.out.println("1. Choose launcher");
             System.out.println("2. Choose capsule");
             System.out.println("3. Choose mission");
             System.out.println("4. Launch");
-            System.out.println("5. Exit");
+            System.out.println("5. Show history");
+            System.out.println("6. Exit");
 
             try {
                 choice = scanner.nextInt();
@@ -95,6 +96,9 @@ public class SimulatorApp {
                     launch();
                     break;
                 case 5:
+                    showHistory();
+                    break;
+                case 6:
                     System.out.println("Bye !");
                     break;
                 default:
@@ -226,6 +230,15 @@ public class SimulatorApp {
             System.out.println("Total cost: " + result.getTotalCost() + " euros");
         } else {
             System.out.println("Launch failed: " + result.getReason());
+        }
+    }
+    private void showHistory() {
+        if (history.isEmpty()) {
+            System.out.println("No launches recorded.");
+            return;
+        }
+        for (int i = 0; i < history.size(); i++) {
+            System.out.println((i + 1) + ". " + history.get(i));
         }
     }
 }
