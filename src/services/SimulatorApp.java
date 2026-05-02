@@ -227,7 +227,7 @@ public class SimulatorApp {
 
         if (result.isSuccess()) {
             System.out.println("Launch successful!");
-            System.out.println("Total cost: " + result.getTotalCost() + " euros");
+            System.out.println("Total cost: " + result.getTotalCost() + " €");
         } else {
             System.out.println("Launch failed: " + result.getReason());
         }
