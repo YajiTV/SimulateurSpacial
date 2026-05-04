@@ -180,15 +180,13 @@ public class SimulatorApp {
             System.out.println("Configure a rocket and a mission first!");
             return;
         }
-        System.out.println("LAUNCH");
-
         Simulator simulator = new Simulator();
         Launch result = simulator.simulate(currentRocket, currentMission);
         history.add(result);
 
         if (result.isSuccess()) {
             System.out.println("Launch successful!");
-            System.out.println("Total cost: " + result.getTotalCost() + " €");
+            System.out.printf("Total cost: %.2f M€%n", result.getTotalCost());
         } else {
             System.out.println("Launch failed: " + result.getReason());
         }

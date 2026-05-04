@@ -7,7 +7,7 @@ import exceptions.FuelInsufficient;
 
 public class Simulator {
 
-    public static final double KEROSENE_PRICE_PER_TON = 1_200;
+    public static final double KEROSENE_PRICE_PER_TON = 0.0012; // M€ per ton
     public static final double FAILURE_PROBABILITY    = 0.05; // 5% chance of failure
 
     public Launch simulate(Rocket rocket, Mission mission) {

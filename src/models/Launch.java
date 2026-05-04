@@ -32,7 +32,7 @@ public class Launch {
         this.totalCost = totalCost;
     }
     public String toString() {
-        return String.format("[%s] %s | Mission: %s | %s | Cost: %.2f",
+        return String.format("[%s] %s | Mission: %s | %s | Cost: %.2f M€",
         date,
         rocket.getLauncher().getName(),
         mission.getName(),
