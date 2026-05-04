@@ -15,10 +15,10 @@ public abstract class Mission {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
-        if (distance < 0) {
+        if (distance <= 0) {
             throw new IllegalArgumentException("Distance cannot be negative");
         }
-        if (fuelCoefficient < 0) {
+        if (fuelCoefficient <= 0) {
             throw new IllegalArgumentException("Fuel coefficient cannot be negative");
         }
 
