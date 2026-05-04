@@ -107,7 +107,10 @@ public class SimulatorApp {
     private void chooseLauncher(Scanner scanner) {
         System.out.println("0. Back");
         for (int i = 0; i < launchers.size(); i++) {
-            System.out.println((i + 1) + ". " + launchers.get(i).getName());
+           Launcher l = launchers.get(i);
+           System.out.printf("  %d. %-12s | Fuel: %st | Payload: %st | Boosters: %d | Crewed: %b | Price: %.0f M€%n",
+            (i + 1), l.getName(), l.getMaxFuel(), l.getMaxPayload(), l.getMaxBoosters(), l.isCrewed(), l.getPrice());
+
         }
         int choice = InputHelper.readInt(scanner, "Your choice : ", 0, launchers.size());
         if (choice == 0) return;
@@ -122,8 +125,11 @@ public class SimulatorApp {
     private void chooseCapsule(Scanner scanner) {
         System.out.println("0. Back");
         for (int i = 0; i < capsules.size(); i++) {
-            System.out.println((i + 1) + ". " + capsules.get(i).getName());
+            Capsule c = capsules.get(i);
+            System.out.printf("  %d. %-14s | Crewed: %b | Occupants: %d | Weight: %st | Price: %.0f M€%n",
+                (i + 1), c.getName(), c.isCrewed(), c.getMaxOccupants(), c.getWeight(), c.getPrice());
         }
+
         int choice = InputHelper.readInt(scanner, "Your choice : ", 0, capsules.size());
         if (choice == 0) return;
         selectedCapsule = capsules.get(choice - 1);
@@ -140,8 +146,11 @@ public class SimulatorApp {
         }
         System.out.println("0. Back");
         for (int i = 0; i < boosters.size(); i++) {
-            System.out.println((i + 1) + ". " + boosters.get(i).getName());
+            Booster b = boosters.get(i);
+            System.out.printf("  %d. %-6s | Thrust: %skN | Mass: %st | Price: %.0f M€%n",
+                (i + 1), b.getName(), b.getThrust(), b.getMass(), b.getPrice());
         }
+
         int choice = InputHelper.readInt(scanner, "Your choice : ", 0, boosters.size());
         if (choice == 0) return;
         Booster selectedBooster = boosters.get(choice - 1);
@@ -159,10 +168,11 @@ public class SimulatorApp {
         }
         System.out.println("0. Back");
         for (int i = 0; i < missions.size(); i++) {
-            System.out.println((i + 1) + ". " + missions.get(i).getName()
-                + " - " + missions.get(i).getDistance() + " km"
-                + " | crew: " + missions.get(i).isCrewRequired());
+            Mission m = missions.get(i);
+            System.out.printf("  %d. %-25s | Distance: %skm | Crew required: %b%n",
+                (i + 1), m.getName(), m.getDistance(), m.isCrewRequired());
         }
+
         int choice = InputHelper.readInt(scanner, "Your choice : ", 0, missions.size());
         if (choice == 0) return;
         Mission chosen = missions.get(choice - 1);
@@ -195,7 +205,7 @@ public class SimulatorApp {
         if (history.isEmpty()) {
             System.out.println("No launches recorded.");
             return;
-        }
+        } 
         for (int i = 0; i < history.size(); i++) {
             System.out.println((i + 1) + ". " + history.get(i));
         }
