@@ -33,7 +33,7 @@ public class Launch {
     }
     public String toString() {
         return String.format("[%s] %s | Mission: %s | %s | Cost: %.2f M€",
-        date,
+        date.format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
         rocket.getLauncher().getName(),
         mission.getName(),
         success ? "SUCCESS" : "FAILURE (" + reason + ")",

@@ -2,29 +2,11 @@ package services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import capsules.Apollo;
-import capsules.Capsule;
-import capsules.CargoDragon;
-import capsules.CrewDragon;
-import capsules.Orion;
-import launchers.Ariane5;
-import launchers.Falcon9;
-import launchers.Launcher;
-import launchers.SLS;
-import launchers.SaturneV;
-import booster.BE3;
-import booster.Booster;
-import booster.EAP;
-import booster.SRB;
-import models.Launch;
-import models.Rocket;
-import missions.ISS;
-import missions.Lune;
-import missions.Mars;
-import missions.Mission;
-import missions.MissionPointLagrangeL2;
-import missions.OrbitTerrestre;
+import capsules.*;
+import launchers.*;
+import booster.*;
+import models.*;
+import missions.*;
 
 // Singleton: only one instance of the app
 public class SimulatorApp {
@@ -48,7 +30,7 @@ public class SimulatorApp {
         launchers = new ArrayList<>(List.of(new SLS(), new SaturneV(), new Ariane5(), new Falcon9()));
         capsules  = new ArrayList<>(List.of(new Orion(), new CrewDragon(), new CargoDragon(), new Apollo()));
         boosters  = new ArrayList<>(List.of(new SRB(), new EAP(), new BE3()));
-        missions  = new ArrayList<>(List.of(new ISS(), new Lune(), new Mars(), new MissionPointLagrangeL2(), new OrbitTerrestre()));
+        missions  = new ArrayList<>(List.of(new ISS(), new Lune(), new Mars(), new PointLagrangeL2(), new OrbitTerrestre()));
         history   = new ArrayList<>(List.of());
     }
 
@@ -144,6 +126,11 @@ public class SimulatorApp {
             System.out.println("Configure a rocket first!");
             return;
         }
+        int max = currentRocket.getLauncher().getMaxBoosters();
+        if (max == 0) {
+            System.out.println("This launcher does not support boosters.");
+            return;
+        }
         System.out.println("0. Back");
         for (int i = 0; i < boosters.size(); i++) {
             Booster b = boosters.get(i);
@@ -154,7 +141,6 @@ public class SimulatorApp {
         int choice = InputHelper.readInt(scanner, "Your choice : ", 0, boosters.size());
         if (choice == 0) return;
         Booster selectedBooster = boosters.get(choice - 1);
-        int max = currentRocket.getLauncher().getMaxBoosters();
         System.out.println("How many boosters do you want to add? (max " + max + ")");
         int quantity = InputHelper.readInt(scanner, "Quantity : ", 1, max);
         currentRocket.addBooster(selectedBooster, quantity);
@@ -193,6 +179,8 @@ public class SimulatorApp {
         Simulator simulator = new Simulator();
         Launch result = simulator.simulate(currentRocket, currentMission);
         history.add(result);
+        new HistoryService().saveHistory(history);
+
 
         if (result.isSuccess()) {
             System.out.println("Launch successful!");
