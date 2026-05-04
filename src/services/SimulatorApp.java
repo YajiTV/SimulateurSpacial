@@ -1,6 +1,5 @@
 package services;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -75,13 +74,7 @@ public class SimulatorApp {
             System.out.println("6. Show history");
             System.out.println("7. Exit");
 
-            try {
-                choice = scanner.nextInt();
-                scanner.nextLine(); // flush the buffer
-            } catch (InputMismatchException e) {
-                scanner.nextLine();
-                continue;
-            }
+            choice = InputHelper.readInt(scanner, "Your choice : ", 1, 7);
 
             switch (choice) {
                 case 1:
@@ -118,24 +111,13 @@ public class SimulatorApp {
         for (int i = 0; i < launchers.size(); i++) {
             System.out.println((i + 1) + ". " + launchers.get(i).getName());
         }
-        try {
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-            if (choice == 0) return;
-            if (choice < 1 || choice > launchers.size()) {
-                System.out.println("Invalid choice.");
-                return;
-            }
-            selectedLauncher = launchers.get(choice - 1);
-            // Build the rocket only if the capsule is already chosen
-            if (selectedCapsule != null) {
-                currentRocket = new Rocket(selectedLauncher, selectedCapsule);
-            }
-            System.out.println("Launcher selected: " + selectedLauncher.getName());
-        } catch (InputMismatchException e) {
-            scanner.nextLine();
-            System.out.println("Invalid input.");
+        int choice = InputHelper.readInt(scanner, "Your choice : ", 0, launchers.size());
+        if (choice == 0) return;
+        selectedLauncher = launchers.get(choice - 1);
+        if (selectedCapsule != null) {
+            currentRocket = new Rocket(selectedLauncher, selectedCapsule);
         }
+        System.out.println("Launcher selected: " + selectedLauncher.getName());
     }
 
     // Shows the capsule list and saves the choice
@@ -144,24 +126,13 @@ public class SimulatorApp {
         for (int i = 0; i < capsules.size(); i++) {
             System.out.println((i + 1) + ". " + capsules.get(i).getName());
         }
-        try {
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-            if (choice == 0) return;
-            if (choice < 1 || choice > capsules.size()) {
-                System.out.println("Invalid choice.");
-                return;
-            }
-            selectedCapsule = capsules.get(choice - 1);
-            // Build the rocket only if the launcher is already chosen
-            if (selectedLauncher != null) {
-                currentRocket = new Rocket(selectedLauncher, selectedCapsule);
-            }
-            System.out.println("Capsule selected: " + selectedCapsule.getName());
-        } catch (InputMismatchException e) {
-            scanner.nextLine();
-            System.out.println("Invalid input.");
+        int choice = InputHelper.readInt(scanner, "Your choice : ", 0, capsules.size());
+        if (choice == 0) return;
+        selectedCapsule = capsules.get(choice - 1);
+        if (selectedLauncher != null) {
+            currentRocket = new Rocket(selectedLauncher, selectedCapsule);
         }
+        System.out.println("Capsule selected: " + selectedCapsule.getName());
     }
 
     private void chooseBoosters(Scanner scanner) {
@@ -173,23 +144,15 @@ public class SimulatorApp {
         for (int i = 0; i < boosters.size(); i++) {
             System.out.println((i + 1) + ". " + boosters.get(i).getName());
         }
+        int choice = InputHelper.readInt(scanner, "Your choice : ", 0, boosters.size());
+        if (choice == 0) return;
+        Booster selectedBooster = boosters.get(choice - 1);
+        int max = currentRocket.getLauncher().getMaxBoosters();
+        System.out.println("How many boosters do you want to add? (max " + max + ")");
+        int quantity = InputHelper.readInt(scanner, "Quantity : ", 1, max);
         try {
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-            if (choice == 0) return;
-            if (choice < 1 || choice > boosters.size()) {
-                System.out.println("Invalid choice.");
-                return;
-            }
-            Booster selectedBooster = boosters.get(choice - 1);
-            System.out.println("How many boosters do you want to add? (max " + currentRocket.getLauncher().getMaxBoosters() + ")");
-            int quantity = scanner.nextInt();
-            scanner.nextLine();
             currentRocket.addBooster(selectedBooster, quantity);
             System.out.println(quantity + " " + selectedBooster.getName() + "(s) added.");
-        } catch (InputMismatchException e) {
-            scanner.nextLine();
-            System.out.println("Invalid input.");
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
@@ -206,25 +169,15 @@ public class SimulatorApp {
                 + " - " + missions.get(i).getDistance() + " km"
                 + " | crew: " + missions.get(i).isCrewRequired());
         }
-        try {
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-            if (choice == 0) return;
-            if (choice < 1 || choice > missions.size()) {
-                System.out.println("Invalid choice.");
-                return;
-            }
-            Mission chosen = missions.get(choice - 1);
-            if (chosen.isCrewRequired() && !currentRocket.getCapsule().isCrewed()) {
-                System.out.println("Warning: your capsule (" + currentRocket.getCapsule().getName() + ") is incompatible with this mission!");
-                return;
-            }
-            currentMission = chosen;
-            System.out.println("Mission selected: " + currentMission.getName());
-        } catch (InputMismatchException e) {
-            scanner.nextLine();
-            System.out.println("Invalid input.");
+        int choice = InputHelper.readInt(scanner, "Your choice : ", 0, missions.size());
+        if (choice == 0) return;
+        Mission chosen = missions.get(choice - 1);
+        if (chosen.isCrewRequired() && !currentRocket.getCapsule().isCrewed()) {
+            System.out.println("Warning: your capsule (" + currentRocket.getCapsule().getName() + ") is incompatible with this mission!");
+            return;
         }
+        currentMission = chosen;
+        System.out.println("Mission selected: " + currentMission.getName());
     }
 
     // Checks all conditions then runs the simulation
