@@ -98,8 +98,6 @@ public class SimulatorApp {
                 case 7:
                     System.out.println("Bye !");
                     break;
-                default:
-                    System.out.println("Invalid choice.");
             }
         }
         scanner.close();
@@ -150,12 +148,8 @@ public class SimulatorApp {
         int max = currentRocket.getLauncher().getMaxBoosters();
         System.out.println("How many boosters do you want to add? (max " + max + ")");
         int quantity = InputHelper.readInt(scanner, "Quantity : ", 1, max);
-        try {
-            currentRocket.addBooster(selectedBooster, quantity);
-            System.out.println(quantity + " " + selectedBooster.getName() + "(s) added.");
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
+        currentRocket.addBooster(selectedBooster, quantity);
+        System.out.println(quantity + " " + selectedBooster.getName() + "(s) added.");
     }
     // Shows the mission list and saves the choice
     private void chooseMission(Scanner scanner) {
