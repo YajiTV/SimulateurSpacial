@@ -1,6 +1,6 @@
 package booster;
 
-public class Booster {
+public abstract class Booster {
     private String name;
     private double thrust;
     private double mass;
