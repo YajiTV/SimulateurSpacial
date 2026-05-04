@@ -10,8 +10,7 @@ public abstract class Mission {
     private double fuelCoefficient;
     private boolean crewRequired;
 
-    public Mission(String name, double distance, double fuelCoefficient,
-                   boolean crewRequired) {
+    public Mission(String name, double distance, double fuelCoefficient, boolean crewRequired) {
 
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name cannot be null or empty");

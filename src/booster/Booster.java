@@ -1,6 +1,6 @@
 package booster;
 
-public abstract class Booster {
+public class Booster {
     private String name;
     private double thrust;
     private double mass;
@@ -36,6 +36,7 @@ public abstract class Booster {
     public double getPrice() {
         return price;
     }
+    @Override
     public String toString() {
         return "Booster{"
                 + "name='" + name + "'"

@@ -66,13 +66,14 @@ public class SimulatorApp {
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
 
-        while (choice != 6) {
+        while (choice != 7) {
             System.out.println("1. Choose launcher");
             System.out.println("2. Choose capsule");
-            System.out.println("3. Choose mission");
-            System.out.println("4. Launch");
-            System.out.println("5. Show history");
-            System.out.println("6. Exit");
+            System.out.println("3. Choose boosters");
+            System.out.println("4. Choose mission");
+            System.out.println("5. Launch");
+            System.out.println("6. Show history");
+            System.out.println("7. Exit");
 
             try {
                 choice = scanner.nextInt();
@@ -90,15 +91,18 @@ public class SimulatorApp {
                     chooseCapsule(scanner);
                     break;
                 case 3:
-                    chooseMission(scanner);
+                    chooseBoosters(scanner);
                     break;
                 case 4:
-                    launch();
+                    chooseMission(scanner);
                     break;
                 case 5:
-                    showHistory();
+                    launch();
                     break;
                 case 6:
+                    showHistory();
+                    break;
+                case 7:
                     System.out.println("Bye !");
                     break;
                 default:
@@ -160,6 +164,36 @@ public class SimulatorApp {
         }
     }
 
+    private void chooseBoosters(Scanner scanner) {
+        if (currentRocket == null) {
+            System.out.println("Configure a rocket first!");
+            return;
+        }
+        System.out.println("0. Back");
+        for (int i = 0; i < boosters.size(); i++) {
+            System.out.println((i + 1) + ". " + boosters.get(i).getName());
+        }
+        try {
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            if (choice == 0) return;
+            if (choice < 1 || choice > boosters.size()) {
+                System.out.println("Invalid choice.");
+                return;
+            }
+            Booster selectedBooster = boosters.get(choice - 1);
+            System.out.println("How many boosters do you want to add? (max " + currentRocket.getLauncher().getMaxBoosters() + ")");
+            int quantity = scanner.nextInt();
+            scanner.nextLine();
+            currentRocket.addBooster(selectedBooster, quantity);
+            System.out.println(quantity + " " + selectedBooster.getName() + "(s) added.");
+        } catch (InputMismatchException e) {
+            scanner.nextLine();
+            System.out.println("Invalid input.");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
     // Shows the mission list and saves the choice
     private void chooseMission(Scanner scanner) {
         if (currentRocket == null) {
@@ -200,26 +234,6 @@ public class SimulatorApp {
             return;
         }
         System.out.println("LAUNCH");
-        double fuel;
-        try {
-            fuel = currentMission.calculateRequiredFuel(currentRocket);
-            System.out.println("Fuel needed: " + fuel + " t");
-        } catch (Exception e) {
-            System.out.println("Launch failed: " + e.getMessage());
-            return;
-        }
-        if (currentRocket.getTotalMass() > currentRocket.getLauncher().getMaxPayload()) {
-            System.out.println("Launch failed: payload exceeded");
-            return;
-        }
-        if (currentRocket.getBoosters().size() > currentRocket.getLauncher().getMaxBoosters()) {
-            System.out.println("Launch failed: too many boosters");
-            return;
-        }
-        if (currentMission.isCrewRequired() && (!currentRocket.getCapsule().isCrewed() || currentRocket.getCapsule().getMaxOccupants() == 0)) {
-            System.out.println("Launch failed: capsule incompatible with crewed mission");
-            return;
-        }
 
         Simulator simulator = new Simulator();
         Launch result = simulator.simulate(currentRocket, currentMission);

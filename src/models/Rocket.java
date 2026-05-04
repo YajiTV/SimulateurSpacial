@@ -54,7 +54,7 @@ public class Rocket {
     }
 
     public double getTotalMass() {
-        double totalMass = launcher.getMaxPayload() + capsule.getWeight();
+        double totalMass = capsule.getWeight();
         for (Booster booster : boosters) {
             totalMass += booster.getMass();
         }

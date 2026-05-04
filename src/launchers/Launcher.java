@@ -60,6 +60,8 @@ public abstract class Launcher {
         return price;
     }
 
+    public abstract String getType();
+
     // toString: readable summary when we print a Launcher
     @Override
     public String toString() {
@@ -70,6 +72,7 @@ public abstract class Launcher {
                 + ", maxBoosters=" + maxBoosters
                 + ", crewed=" + crewed
                 + ", price=" + price + "M$"
+                + ", my type is " + getType()
                 + "}";
     }
 }

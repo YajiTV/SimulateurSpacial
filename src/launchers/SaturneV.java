@@ -4,4 +4,8 @@ public class SaturneV extends Launcher {
     public SaturneV() {
         super("Saturne V", 2700, 140, 0, true, 1500);
     }
+    @Override
+    public String getType() {
+        return "Launcher Américain";
+    }
 }
