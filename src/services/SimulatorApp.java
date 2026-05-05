@@ -90,7 +90,7 @@ public class SimulatorApp {
         System.out.println("0. Back");
         for (int i = 0; i < launchers.size(); i++) {
            Launcher l = launchers.get(i);
-           System.out.printf("  %d. %-12s | Fuel: %st | Payload: %st | Boosters: %d | Crewed: %b | Price: %.0f M€%n",
+           System.out.printf("  %d. %-12s, Fuel: %st, Payload: %st, Boosters: %d, Crewed: %b, Price: %.0f M€%n",
             (i + 1), l.getName(), l.getMaxFuel(), l.getMaxPayload(), l.getMaxBoosters(), l.isCrewed(), l.getPrice());
 
         }
@@ -108,7 +108,7 @@ public class SimulatorApp {
         System.out.println("0. Back");
         for (int i = 0; i < capsules.size(); i++) {
             Capsule c = capsules.get(i);
-            System.out.printf("  %d. %-14s | Crewed: %b | Occupants: %d | Weight: %st | Price: %.0f M€%n",
+            System.out.printf("  %d. %-14s, Crewed: %b, Occupants: %d, Weight: %st, Price: %.0f M€%n",
                 (i + 1), c.getName(), c.isCrewed(), c.getMaxOccupants(), c.getWeight(), c.getPrice());
         }
 
@@ -134,7 +134,7 @@ public class SimulatorApp {
         System.out.println("0. Back");
         for (int i = 0; i < boosters.size(); i++) {
             Booster b = boosters.get(i);
-            System.out.printf("  %d. %-6s | Thrust: %skN | Mass: %st | Price: %.0f M€%n",
+            System.out.printf("  %d. %-6s, Thrust: %skN, Mass: %st, Price: %.0f M€%n",
                 (i + 1), b.getName(), b.getThrust(), b.getMass(), b.getPrice());
         }
 
@@ -155,7 +155,7 @@ public class SimulatorApp {
         System.out.println("0. Back");
         for (int i = 0; i < missions.size(); i++) {
             Mission m = missions.get(i);
-            System.out.printf("  %d. %-25s | Distance: %skm | Crew required: %b%n",
+            System.out.printf("  %d. %-25s, Distance: %skm, Crew required: %b%n",
                 (i + 1), m.getName(), m.getDistance(), m.isCrewRequired());
         }
 

@@ -32,7 +32,7 @@ public class Launch {
         this.totalCost = totalCost;
     }
     public String toString() {
-        return String.format("[%s] Capsule : %s, Mission: %s,  %s, Cost: %.2f M€",
+        return String.format("[%s] Capsule : %s, Mission: %s, %s, Cost: %.2f M€",
         date.format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
         rocket.getLauncher().getName(),
         mission.getName(),
