@@ -14,6 +14,18 @@ public class Rocket {
     private Capsule capsule;
     private List<Booster> boosters;
 
+    public Rocket(Launcher launcher, Capsule capsule) {
+        if (launcher == null) {
+            throw new IllegalArgumentException("Launcher cannot be null");
+        }
+        if (capsule == null) {
+            throw new IllegalArgumentException("Capsule cannot be null");
+        }
+        this.launcher = launcher;
+        this.capsule = capsule;
+        this.boosters = new ArrayList<>();
+    }
+
     public void addBooster(Booster booster) {
         if (booster == null) {
             throw new IllegalArgumentException("Booster cannot be null");
@@ -27,18 +39,6 @@ public class Rocket {
         for (int i = 0; i < quantity; i++) {
             addBooster(booster);
         }
-    }
-
-    public Rocket(Launcher launcher, Capsule capsule) {
-        if (launcher == null) {
-            throw new IllegalArgumentException("Launcher cannot be null");
-        }
-        if (capsule == null) {
-            throw new IllegalArgumentException("Capsule cannot be null");
-        }
-        this.launcher = launcher;
-        this.capsule = capsule;
-        this.boosters = new ArrayList<>();
     }
 
     public List<Booster> getBoosters() {

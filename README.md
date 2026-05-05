@@ -128,6 +128,16 @@ Your choice : 1
 
 ## Architecture
 
+### Diagramme UML
+
+<div align="center">
+
+![Diagramme UML](docs/diagram_uml.drawio.png)
+
+</div>
+
+### Structure des fichiers
+
 ```
 SimulationSpacial/
 ├── Main.java                       → Point d'entrée
@@ -187,13 +197,17 @@ SimulationSpacial/
 
 ---
 
-## Licence
-
-Ce projet est sous licence MIT.
-
----
-
 <div align="center">
 
 By Mathys P.K
 </div>
+
+---
+
+## Déclaration IA
+
+Dans le cadre de ce projet, j'ai utilisé Claude de plusieurs façons :
+
+- **Gestion de projet** : Claude m'a aidé à structurer et rédiger mon espace Notion pour organiser le projet (suivi des tâches, documentation, planning).
+- **Design du README** : Claude a contribué à la mise en forme et à la structure de ce fichier README (badges, tableaux, sections).
+- **Apprentissage des notions techniques** : Avant de me lancer dans le développement, j'ai posé de nombreuses questions à Claude sur les termes et concepts techniques que je devais maîtriser en me refaisant un cours structuré que je pouvais réutiliser n'importe quand sur classes abstraites, exceptions, design patterns, l'héritage, l'encapsulation, formules de simulation ... afin de bien comprendre les notions avant de les implémenter.
