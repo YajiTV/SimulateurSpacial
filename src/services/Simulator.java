@@ -17,7 +17,7 @@ public class Simulator {
         try {
             fuel = mission.calculateRequiredFuel(rocket);
         } catch (FuelInsufficient e) {
-            return new Launch(rocket, mission, false, "Insufficient fuel", 0);
+            return new Launch(rocket, mission, false, e.getMessage(), 0);
         }
 
         // Condition 2 : rocket is too heavy for the launcher

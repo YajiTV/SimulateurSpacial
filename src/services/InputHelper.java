@@ -8,7 +8,7 @@ public class InputHelper {
         boolean valid = false;
         
         while (!valid) {
-            System.out.println(message);
+            System.out.print(message);
             try {
                 value = scanner.nextInt();
                 scanner.nextLine();

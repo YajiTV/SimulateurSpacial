@@ -7,5 +7,4 @@ public class FuelInsufficient extends Exception {
     public FuelInsufficient(double need, double max ) {
         super("Fuel insufficient, need " + need + "tonnes because max is " + max);
     }
-    
 }
